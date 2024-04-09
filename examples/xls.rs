@@ -1,6 +1,7 @@
 extern crate csv;
 
 use rust_xlsxwriter::*;
+use colorful_rabbit_rs::file::xls_csv;
 
 use std::error::Error;
 use std::fs::File;
@@ -8,16 +9,36 @@ use csv::ReaderBuilder;
 
 fn read_csv_file(file_path: &str) -> Result<(), Box<dyn Error>> {
   let file = File::open(file_path)?;
-  let mut rdr = ReaderBuilder::new().from_reader(file);
+  // let mut rdr = ReaderBuilder::new().from_reader(file);
+  let mut rdr = ReaderBuilder::new().has_headers(false).from_reader(file);
 
+  // for result in rdr.records() {
+  //   let record = result?;
+  //   for field in record.iter() {
+  //     print!("{}, ", field);
+  //   }
+  //   println!();
+  // }
+
+  let mut lines: Vec<Vec<String>> = Vec::new();
   for result in rdr.records() {
     let record = result?;
+    let mut line = Vec::new();
     for field in record.iter() {
-      print!("{}, ", field);
+      // line.push(field);
+      line.push(field.to_string());
+      // print!("{}, ", field);
     }
-    println!();
+    println!("{:?}", line);
+    lines.push(line);
   }
 
+  // for result in rdr.records() {
+  //   let record = result?;
+  //   let line = record.as_slice();
+  //   println!("{}", line);
+  // }
+  println!("lines len: {}", lines.len());
   Ok(())
 }
 
@@ -78,12 +99,19 @@ fn write_xls() -> Result<(), XlsxError> {
   Ok(())
 }
 
+fn read_csv() {
+  let lines = xls_csv::read_csv("data.csv").unwrap();
+  println!("{:?}", lines);
+}
+
 fn main() {
   if let Err(err) = read_csv_file("data.csv") {
     eprintln!("error reading CSV file: {}", err);
   }
 
-  write_xls();
+  // write_xls();
+
+  // read_csv();
 }
 
 
