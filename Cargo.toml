@@ -19,4 +19,8 @@ path = "examples/command.rs"
 name = "xls"
 path = "examples/xls.rs"
 
+[[example]]
+name = "folder"
+path = "examples/folder.rs"
+
 
