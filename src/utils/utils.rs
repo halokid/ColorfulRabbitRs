@@ -1,5 +1,6 @@
-use std::io;
+use std::{fs, io};
 use std::io::BufRead;
+use std::path::Path;
 use std::process::{Command, Stdio};
 
 pub fn runcmd(cmd: &str, args: &[&str]) -> String {
@@ -29,3 +30,26 @@ pub fn runcmd_pipe(cmd: &str, args: &[&str]) {
     println!("{}", line.unwrap());
   }
 }
+
+pub fn get_latest_folder(folder: &str) -> Option<String>  {
+  let root_folder = Path::new(folder);
+
+    let latest_folder = fs::read_dir(root_folder)
+        .expect("Failed to read directory")
+        .filter_map(|entry| {
+            entry.ok().and_then(|e| {
+                e.metadata().ok().map(|m| (e.file_name(), m.modified().ok()))
+            })
+        })
+        .filter_map(|(name, modified)| modified.map(|m| (name, m)))
+        .max_by_key(|&(_, time)| time)
+        .map(|(name, _)| name)
+        .map(|name| name.to_string_lossy().into_owned());
+
+    match latest_folder {
+        Some(folder_name) => Some(folder_name),
+        None => None,
+    }
+}
+
+
