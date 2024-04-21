@@ -8,5 +8,12 @@ fn test_read_csv() {
   println!("{:?}", lines.unwrap());
 }
 
+#[test]
+fn test_write_xls() {
+  let file_path = "./demo.xlsx";
+  let lines = xls_csv::write_xls(file_path);
+  println!("{:?}", lines.unwrap());
+}
+
 
 

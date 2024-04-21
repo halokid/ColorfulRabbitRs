@@ -1,6 +1,5 @@
 use rust_xlsxwriter::*;
 
-use std::error::Error;
 use std::fs::File;
 use csv::ReaderBuilder;
 use crate::CustomErr;
@@ -23,4 +22,22 @@ pub fn read_csv(file_path: &str) -> Result<Vec<Vec<String>>,
   }
   Ok(lines)
 }
+
+pub fn write_xls(file_path: &str, content: Vec<Vec<String>>) -> Result<(), CustomErr> {
+  // Create a new Excel file object.
+  let mut workbook =  Workbook::new();
+  // Add a worksheet to the workbook.
+  let worksheet = workbook.add_worksheet();
+
+  let column_len = content[0].len() as f64;
+  worksheet.set_column_width(0, column_len).unwrap();
+
+
+
+  // Save the file to disk.
+  workbook.save(file_path).unwrap();
+
+  Ok(())
+}
+
 
