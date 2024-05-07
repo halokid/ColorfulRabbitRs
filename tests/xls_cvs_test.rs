@@ -10,9 +10,14 @@ fn test_read_csv() {
 
 #[test]
 fn test_write_xls() {
-  let file_path = "./demo.xlsx";
-  let lines = xls_csv::write_xls(file_path);
-  println!("{:?}", lines.unwrap());
+  let file_path = "./data.csv";
+  let lines = xls_csv::read_csv(file_path);
+  let content = lines.unwrap();
+  println!("{:?}", content);
+
+  let w_file_path = "./demo.xlsx";
+  let w = xls_csv::write_xls(w_file_path, content);
+  println!("{:?}", w);
 }
 
 

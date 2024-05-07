@@ -32,7 +32,15 @@ pub fn write_xls(file_path: &str, content: Vec<Vec<String>>) -> Result<(), Custo
   let column_len = content[0].len() as f64;
   worksheet.set_column_width(0, column_len).unwrap();
 
-
+  let mut i = 0;
+  for line in content.iter() {
+    let mut j = 0;
+    for col in line.iter() {
+      worksheet.write(i, j, col).unwrap();
+      j += 1;
+    }
+    i += 1;
+  }
 
   // Save the file to disk.
   workbook.save(file_path).unwrap();
