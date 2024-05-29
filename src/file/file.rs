@@ -6,13 +6,14 @@ use crate::CustomErr;
 // trait ForLine {
 //   fn linestr() -> String;
 // }
-
+//
 // impl ForLine for T {
 //   fn linestr() -> String {
 //     "line".to_string()
 //   }
 // }
 
+// pub fn write<T: Debug>(filepath: String, data: Vec<T>) -> Result<(), CustomErr> {
 pub fn write<T: Debug>(filepath: String, data: Vec<T>) -> Result<(), CustomErr> {
 
   // trait ForLine {
