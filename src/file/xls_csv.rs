@@ -75,9 +75,7 @@ pub fn write_xls(file_path: &str, content: Vec<Vec<String>>) -> Result<(), Custo
   Ok(())
 }
 
-pub fn read_excel(file_path: &str, sheet: &str) -> Result<(), CustomErr> {
-  // let file_path = "test.xlsx";
-
+pub fn read_excel(file_path: &str, sheet: &str) -> Result<Vec<Vec<String>>, CustomErr> {
   // opens a new workbook
   let mut workbook: Xlsx<_> = open_workbook(file_path).expect("Cannot open file");
 
@@ -85,26 +83,23 @@ pub fn read_excel(file_path: &str, sheet: &str) -> Result<(), CustomErr> {
     .worksheet_range(sheet)
     .expect("Cannot find 'Sheet1'");
 
-  // 遍历工作表中的所有行
+  let mut res_lines: Vec<Vec<String>> = Vec::new();
   let mut i = 0;
   for row in worksheet.rows() {
     // if i > 100 {
     //   break
     // }
     let mut vec_row_data: Vec<String> = Vec::new();
-    // 遍历当前行的所有单元格
     for cell in row {
-      // 将单元格的值转换为字符串并添加到row_data向量中
       vec_row_data.push(cell.to_string());
     }
-    //打印
-    println!("{:?}, x: {}, y: {}", vec_row_data, vec_row_data.get(20).unwrap(), vec_row_data.get(2).unwrap());
+
+    res_lines.push(vec_row_data);
+    // println!("{:?}, x: {}, y: {}", vec_row_data, vec_row_data.get(20).unwrap(), vec_row_data.get(2).unwrap());
     i += 1;
   }
 
-  // 关闭工作簿
   drop(workbook);
-
-  Ok(())
+  Ok(res_lines)
 }
 
