@@ -2,6 +2,7 @@ use std::fmt;
 
 pub mod utils;
 pub mod file;
+pub mod datet;
 
 #[derive(Debug)]
 pub struct CustomErr (pub String);

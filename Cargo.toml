@@ -9,7 +9,7 @@ edition = "2021"
 csv = "1.1"
 rust_xlsxwriter = "0.64.1"
 calamine = "0.23.1"
-
+chrono = "0.4"
 
 [[example]]
 name = "command"
@@ -22,5 +22,11 @@ path = "examples/xls.rs"
 [[example]]
 name = "folder"
 path = "examples/folder.rs"
+
+[[example]]
+name = "mydatetimex"
+path = "examples/datetimex.rs"
+
+
 
 
